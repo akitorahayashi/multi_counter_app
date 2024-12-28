@@ -9,6 +9,7 @@ import Foundation
 
 struct Counter: Equatable, Identifiable {
     let id: UUID
-    var count: Int
+    var name: String?
+    var countNum: Int
 }
 

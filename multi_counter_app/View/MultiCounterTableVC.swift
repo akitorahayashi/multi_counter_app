@@ -74,7 +74,8 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: CounterCell.reuseIdentifier, for: indexPath) as! CounterCell
         let counter = CounterViewModel.shared.getCounters[indexPath.row]
         
-        cell.countLabel.text = "\(counter.count)"
+        cell.configure(name: counter.name, count: counter.countNum)
+        
         cell.incrementAction = {
             CounterViewModel.shared.incrementCounter(at: indexPath.row)
         }
@@ -83,6 +84,39 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         return cell
+    }
+    
+    // セルを選択した時に名前の変更アラートを出す
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let counter = CounterViewModel.shared.getCounters[indexPath.row]
+        let alert = UIAlertController(title: "名前を設定", message: nil, preferredStyle: .alert)
+        
+        // テキストフィールドに現在の名前をプリセット
+        alert.addTextField { textField in
+            textField.placeholder = "名前を入力してください"
+            textField.text = counter.name
+        }
+        
+        // 保存アクション
+        let saveAction = UIAlertAction(title: "保存", style: .default) { _ in
+            if let text = alert.textFields?.first?.text?.trimmingCharacters(in: .whitespaces), !text.isEmpty, text.count <= 20 {
+                CounterViewModel.shared.updateName(at: indexPath.row, with: text)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+                // バリデーションエラーメッセージ
+                let errorAlert = UIAlertController(title: "エラー", message: "名前は空白を除いた上で20文字以下にしてください。", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(errorAlert, animated: true)
+            }
+        }
+        
+        // キャンセルアクション
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel)
+        
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
     
     // セルが編集可能であることを指定
