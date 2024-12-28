@@ -30,7 +30,7 @@ final class CounterViewModel {
     // MARK: - Counterの追加や削除を行う
     func addCounter() {
         store.commit { state in
-            let newCounter = Counter(id: UUID(), count: 0)
+            let newCounter = Counter(id: UUID(), countNum: 0)
             state.counters.append(newCounter)
         }
     }
@@ -41,18 +41,25 @@ final class CounterViewModel {
             state.counters.remove(at: index)
         }
     }
+    // MARK: - Counterの名前変更を行う
+    func updateName(at index: Int, with name: String) {
+        guard index < getCounters.count else { return }
+        store.commit { state in
+            state.counters[index].name = name
+        }
+    }
     
     // MARK: - counterの値を増減させる
     func incrementCounter(at index: Int) {
         guard index < getCounters.count else { return }
         store.commit { state in
-            state.counters[index].count += 1
+            state.counters[index].countNum += 1
         }
     }
     
     func decrementCounter(at index: Int) {
         store.commit { state in
-            state.counters[index].count -= 1
+            state.counters[index].countNum -= 1
         }
     }
     

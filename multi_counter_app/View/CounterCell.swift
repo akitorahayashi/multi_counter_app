@@ -9,7 +9,11 @@ import UIKit
 
 class CounterCell: UITableViewCell {
     static let reuseIdentifier = "CounterCell"
-    let countLabel = UILabel()
+    
+    private let nameLabel = UILabel()
+    private let countLabel = UILabel()
+    private let labelStackView = UIStackView()
+    
     let incrementButton = UIButton(type: .system)
     let decrementButton = UIButton(type: .system)
     
@@ -18,10 +22,29 @@ class CounterCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        // セル選択時のハイライトを無効化
+        selectionStyle = .none
+        
+        // Counterの名前
+        nameLabel.font = UIFont.systemFont(ofSize: 14)
+        nameLabel.textAlignment = .center
+        nameLabel.isHidden = true
+        contentView.addSubview(nameLabel)
         
         // カウントした数字を表示
-        countLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(countLabel)
+        countLabel.textAlignment = .center
+        
+        // stack viewの設定
+        labelStackView.axis = .vertical
+        labelStackView.alignment = .center
+        labelStackView.spacing = 4
+        labelStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(labelStackView)
+        
+        // 名前とカウントした数字をstack viewに追加
+        labelStackView.addArrangedSubview(nameLabel)
+        labelStackView.addArrangedSubview(countLabel)
+        contentView.addSubview(labelStackView)
         
         // +ボタン
         incrementButton.setTitle("+", for: .normal)
@@ -37,9 +60,9 @@ class CounterCell: UITableViewCell {
         decrementButton.addTarget(self, action: #selector(decrementTapped), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            // 数字のラベルの制約
-            countLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            countLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            // スタックビューを中央に配置
+            labelStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            labelStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             // 増加ボタンの制約
             incrementButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
@@ -53,6 +76,17 @@ class CounterCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // セルを設定するメソッド
+    func configure(name: String?, count: Int) {
+        if let name = name {
+            nameLabel.isHidden = false
+            nameLabel.text = name
+        } else {
+            nameLabel.isHidden = true
+        }
+        countLabel.text = "\(count)"
     }
     
     @objc private func incrementTapped() {
