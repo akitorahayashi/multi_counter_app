@@ -2,8 +2,6 @@
 //  MultiCounterTableVC.swift
 //  multi_counter_app
 //
-//  Created by 林 明虎 on 2024/12/28.
-//
 
 import UIKit
 import Verge
@@ -12,6 +10,8 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
     private let tableView = UITableView()
     private let addCounterButton = UIButton(type: .system)
     
+    private var cancellable: VergeAnyCancellable?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,6 +19,7 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         tableView.register(CounterCell.self, forCellReuseIdentifier: CounterCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.rowHeight = 80
         setupUI()
         
         setupBindings()
@@ -31,7 +32,11 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         // Counterを追加するボタン
         addCounterButton.setTitle("Add Counter", for: .normal)
         addCounterButton.translatesAutoresizingMaskIntoConstraints = false
+        addCounterButton.addTarget(self, action: #selector(addAnotherCounter), for: .touchUpInside)
         view.addSubview(addCounterButton)
+        
+        // テーブルビューの下部にスペースを追加
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right: 0)
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -45,51 +50,37 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
             addCounterButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
-    // MARK: - MultiCounterTableVCのメソッド
-    private var cancellable: VergeAnyCancellable?
+    
     private func setupBindings() {
-        addCounterButton.addTarget(self, action: #selector(addAnotherCounter), for: .touchUpInside)
-        
-        cancellable = VergeAnyCancellable(countersStore.sinkState { [weak self] state in
-            print("sinkState triggered with \(state.counters.count) counters")
+        cancellable = CounterViewModel.shared.observeState { [weak self] state in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
-        })
-        
-    }
-    
-    @objc private func addAnotherCounter() {
-        countersStore.commit { state in
-            let newCounter = Counter(id: UUID(), count: 0)
-            state.counters.append(newCounter)
-            print("Added new counter: \(state.counters)")
         }
     }
     
+    @objc private func addAnotherCounter() {
+        CounterViewModel.shared.addCounter()
+    }
     
-    // MARK: - tableView
+    // MARK: - UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        countersStore.state.counters.count
+        CounterViewModel.shared.getCounters.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CounterCell.reuseIdentifier, for: indexPath) as! CounterCell
-        let counter = countersStore.state.counters[indexPath.row]
+        let counter = CounterViewModel.shared.getCounters[indexPath.row]
         
         cell.countLabel.text = "\(counter.count)"
         cell.incrementAction = {
-            countersStore.commit { state in
-                state.counters[indexPath.row].count += 1
-            }
+            CounterViewModel.shared.incrementCounter(at: indexPath.row)
         }
         cell.decrementAction = {
-            countersStore.commit { state in
-                state.counters[indexPath.row].count -= 1
-            }
+            CounterViewModel.shared.decrementCounter(at: indexPath.row)
         }
+        
         return cell
     }
 }
-
