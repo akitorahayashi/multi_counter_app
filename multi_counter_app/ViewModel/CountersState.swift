@@ -7,8 +7,8 @@
 
 import Verge
 
-struct AppState: Equatable {
+struct CountersState: Equatable {
     var counters: [Counter] = []
 }
 
-let store = Store(initialState: AppState(), logger: nil)
+let store = Store<CountersState, Never>(initialState: CountersState(), logger: nil)

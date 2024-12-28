@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Verge
 
 struct Counter: Equatable, Identifiable {
     let id: UUID
