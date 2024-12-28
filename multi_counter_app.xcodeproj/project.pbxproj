@@ -208,6 +208,9 @@
 			);
 			mainGroup = 1BF12CF92D1EA2DE006B5C34;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1BFFA32C2D1F8A4C0018E4A1 /* XCRemoteSwiftPackageReference "swift-verge" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1BF12D032D1EA2DE006B5C34 /* Products */;
 			projectDirPath = "";
@@ -565,6 +568,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1BFFA32C2D1F8A4C0018E4A1 /* XCRemoteSwiftPackageReference "swift-verge" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/VergeGroup/swift-verge.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 1BF12CFA2D1EA2DE006B5C34 /* Project object */;
 }
