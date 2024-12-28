@@ -33,6 +33,9 @@ class CounterCell: UITableViewCell {
         decrementButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(decrementButton)
         
+        incrementButton.addTarget(self, action: #selector(incrementTapped), for: .touchUpInside)
+        decrementButton.addTarget(self, action: #selector(decrementTapped), for: .touchUpInside)
+        
         NSLayoutConstraint.activate([
             // 数字のラベルの制約
             countLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
