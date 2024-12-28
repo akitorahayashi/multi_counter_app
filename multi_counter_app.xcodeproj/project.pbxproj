@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1B17D7652D1FC3F0009C8449 /* Verge in Frameworks */ = {isa = PBXBuildFile; productRef = 1B17D7642D1FC3F0009C8449 /* Verge */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1BF12D192D1EA2E1006B5C34 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B17D7652D1FC3F0009C8449 /* Verge in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +130,7 @@
 			);
 			name = multi_counter_app;
 			packageProductDependencies = (
+				1B17D7642D1FC3F0009C8449 /* Verge */,
 			);
 			productName = multi_counter_app;
 			productReference = 1BF12D022D1EA2DE006B5C34 /* multi_counter_app.app */;
@@ -579,6 +585,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1B17D7642D1FC3F0009C8449 /* Verge */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1BFFA32C2D1F8A4C0018E4A1 /* XCRemoteSwiftPackageReference "swift-verge" */;
+			productName = Verge;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1BF12CFA2D1EA2DE006B5C34 /* Project object */;
 }

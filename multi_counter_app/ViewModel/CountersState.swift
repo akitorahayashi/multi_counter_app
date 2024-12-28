@@ -11,4 +11,4 @@ struct CountersState: Equatable {
     var counters: [Counter] = []
 }
 
-let store = Store<CountersState, Never>(initialState: CountersState(), logger: nil)
+let countersStore = Store<CountersState, Never>(initialState: CountersState(), logger: nil)

@@ -26,10 +26,12 @@ class CounterCell: UITableViewCell {
         // +ボタン
         incrementButton.setTitle("+", for: .normal)
         incrementButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(incrementButton)
         
         // -ボタン
-        decrementButton.setTitle("", for: .normal)
+        decrementButton.setTitle("-", for: .normal)
         decrementButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(decrementButton)
         
         NSLayoutConstraint.activate([
             // 数字のラベルの制約
@@ -41,7 +43,7 @@ class CounterCell: UITableViewCell {
             incrementButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             // 減少ボタンの制約
-            decrementButton.leftAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            decrementButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             decrementButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }

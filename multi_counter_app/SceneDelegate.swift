@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.backgroundColor = UIColor.systemBackground
         window.makeKeyAndVisible()
         
-        let navigationController = UINavigationController(rootViewController: ViewController())
+        let navigationController = UINavigationController(rootViewController: MultiCounterTableVC())
         window.rootViewController = navigationController
     }
 
