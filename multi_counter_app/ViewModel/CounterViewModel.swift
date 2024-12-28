@@ -27,6 +27,7 @@ final class CounterViewModel {
         }
     }
     
+    // MARK: - Counterの追加や削除を行う
     func addCounter() {
         store.commit { state in
             let newCounter = Counter(id: UUID(), count: 0)
@@ -34,6 +35,14 @@ final class CounterViewModel {
         }
     }
     
+    func removeCounter(at index: Int) {
+        guard index < getCounters.count else { return }
+        let _ = store.commit { state in
+            state.counters.remove(at: index)
+        }
+    }
+    
+    // MARK: - counterの値を増減させる
     func incrementCounter(at index: Int) {
         guard index < getCounters.count else { return }
         store.commit { state in

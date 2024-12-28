@@ -69,6 +69,7 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         CounterViewModel.shared.getCounters.count
     }
     
+    // セルの内容を生成
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CounterCell.reuseIdentifier, for: indexPath) as! CounterCell
         let counter = CounterViewModel.shared.getCounters[indexPath.row]
@@ -82,5 +83,21 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         return cell
+    }
+    
+    // セルが編集可能であることを指定
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    // スワイプで削除を実装
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // データの削除
+            CounterViewModel.shared.removeCounter(at: indexPath.row)
+            
+            // テーブルビューを更新
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
 }
