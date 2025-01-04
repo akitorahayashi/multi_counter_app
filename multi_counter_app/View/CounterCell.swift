@@ -29,7 +29,6 @@ class CounterCell: UITableViewCell {
         nameLabel.font = UIFont.systemFont(ofSize: 14)
         nameLabel.textAlignment = .center
         nameLabel.isHidden = true
-        contentView.addSubview(nameLabel)
         
         // カウントした数字を表示
         countLabel.textAlignment = .center
