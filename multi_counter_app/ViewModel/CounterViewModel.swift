@@ -19,23 +19,23 @@ final class CounterViewModel {
     }
 
     func addCounter() {
-        store.dispatch(action: .addCounter)
+        store.addCounter()
     }
 
     func removeCounter(at index: Int) {
-        store.dispatch(action: .removeCounter(index: index))
+        store.removeCounter(at: index)
     }
 
     func updateName(at index: Int, with name: String) {
-        store.dispatch(action: .updateName(index: index, name: name))
+        store.updateName(at: index, name: name)
     }
 
     func incrementCounter(at index: Int) {
-        store.dispatch(action: .increment(index: index))
+        store.incrementCounter(at: index)
     }
 
     func decrementCounter(at index: Int) {
-        store.dispatch(action: .decrement(index: index))
+        store.decrementCounter(at: index)
     }
 
     func observeCounters(_ observer: @escaping ([Counter]) -> Void) -> VergeAnyCancellable {
