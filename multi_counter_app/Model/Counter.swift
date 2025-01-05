@@ -7,9 +7,18 @@
 
 import Foundation
 
-struct Counter: Equatable, Identifiable {
+struct Counter: Equatable {
     let id: UUID
     var name: String?
     var countNum: Int
+
+    mutating func increment() {
+        countNum += 1
+    }
+
+    mutating func decrement() {
+        countNum -= 1
+    }
 }
+
 

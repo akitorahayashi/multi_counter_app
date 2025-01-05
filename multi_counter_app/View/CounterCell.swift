@@ -29,20 +29,17 @@ class CounterCell: UITableViewCell {
         nameLabel.font = UIFont.systemFont(ofSize: 14)
         nameLabel.textAlignment = .center
         nameLabel.isHidden = true
+        labelStackView.addArrangedSubview(nameLabel)
         
         // カウントした数字
         countLabel.textAlignment = .center
+        labelStackView.addArrangedSubview(countLabel)
         
         // stack viewの設定
         labelStackView.axis = .vertical
         labelStackView.alignment = .center
         labelStackView.spacing = 4
         labelStackView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(labelStackView)
-        
-        // 名前とカウントした数字をstack viewに追加
-        labelStackView.addArrangedSubview(nameLabel)
-        labelStackView.addArrangedSubview(countLabel)
         contentView.addSubview(labelStackView)
         
         // +ボタン
