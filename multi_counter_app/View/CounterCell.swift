@@ -30,7 +30,7 @@ class CounterCell: UITableViewCell {
         nameLabel.textAlignment = .center
         nameLabel.isHidden = true
         
-        // カウントした数字を表示
+        // カウントした数字
         countLabel.textAlignment = .center
         
         // stack viewの設定

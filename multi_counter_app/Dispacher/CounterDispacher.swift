@@ -9,13 +9,13 @@ final class CounterDispatcher {
     static let shared = CounterDispatcher()
     private init() {}
     
-    private var callbacks: [(CounterAction) -> Void] = []
+    private var actionHandlers: [(CounterAction) -> Void] = []
     
     func register(callback: @escaping (CounterAction) -> Void) {
-        callbacks.append(callback)
+        actionHandlers.append(callback)
     }
     
     func dispatch(action: CounterAction) {
-        callbacks.forEach { $0(action) }
+        actionHandlers.forEach { $0(action) }
     }
 }

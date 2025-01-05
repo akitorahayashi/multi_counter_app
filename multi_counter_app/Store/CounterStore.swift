@@ -9,6 +9,12 @@ import Foundation
 
 final class CounterStore {
     static let shared = CounterStore()
+    private init() {
+        // dispacherからactionがdispachされた時に対応するメソッドを登録
+        CounterDispatcher.shared.register { [weak self] action in
+            self?.handle(action: action)
+        }
+    }
     
     private(set) var counters: [Counter] = [] {
         didSet {
@@ -16,22 +22,17 @@ final class CounterStore {
         }
     }
     
-    private var observers: [(CounterStore) -> Void] = []
-    
-    private init() {
-        CounterDispatcher.shared.register { [weak self] action in
-            self?.handle(action: action)
-        }
-    }
-    
-    func observe(_ observer: @escaping (CounterStore) -> Void) {
-        observers.append(observer)
-        observer(self) // Initial call
-    }
-    
     private func notifyObservers() {
         observers.forEach { $0(self) }
     }
+    
+    private var observers: [(CounterStore) -> Void] = []
+    
+    func observe(_ observer: @escaping (CounterStore) -> Void) {
+        observers.append(observer)
+        observer(self)
+    }
+    
     
     private func handle(action: CounterAction) {
         switch action {
