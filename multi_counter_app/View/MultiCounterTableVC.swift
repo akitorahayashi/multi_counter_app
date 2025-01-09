@@ -87,9 +87,11 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let counter = counterViewModel.counters[indexPath.row]
         let alert = UIAlertController(title: "名前を設定", message: nil, preferredStyle: .alert)
+        alert.view.accessibilityIdentifier = "NameChangeAlert"
         
         alert.addTextField { textField in
             textField.placeholder = "名前を入力してください"
+            textField.accessibilityIdentifier = "NameChangeTextField"
             textField.text = counter.name
         }
         
@@ -98,6 +100,7 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
                 self?.counterViewModel.updateName(at: indexPath.row, with: text)
             }
         }
+        saveAction.accessibilityIdentifier = "SaveButton"
         
         alert.addAction(saveAction)
         alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel))
