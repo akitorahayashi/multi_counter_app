@@ -19,21 +19,24 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
+        setupUI()
+        
         tableView.register(CounterCell.self, forCellReuseIdentifier: CounterCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 80
-        setupUI()
         
         bindViewModel()
     }
     
     private func setupUI() {
+        tableView.accessibilityIdentifier = "CounterTableView"
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         
         addCounterButton.setTitle(" Add Counter", for: .normal)
         addCounterButton.addTarget(self, action: #selector(addCounter), for: .touchUpInside)
+        addCounterButton.accessibilityIdentifier = "Add Counter"
         addCounterButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(addCounterButton)
         
