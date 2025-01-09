@@ -34,6 +34,8 @@ class AddCounterButtonTests: XCTestCase {
         XCTAssertEqual(tableView.cells.count, expectedCellCount)
         // 新しいCellが正しいデフォルト値を持っていることを確認
         let newCell = tableView.cells.element(boundBy: initialCellCount)
-        XCTAssertTrue(newCell.staticTexts["0"].exists, "New cell does not display the correct initial count.")
+        let countLabelInNewCell = newCell.staticTexts.matching(identifier: "CounterOfThisCell").element
+        let initialCount = Int(countLabelInNewCell.label)
+        XCTAssertEqual(initialCount, 0, "新しいセルのデフォルトのcountが0で設定されていない")
     }
 }
