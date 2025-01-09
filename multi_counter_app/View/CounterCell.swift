@@ -33,6 +33,7 @@ class CounterCell: UITableViewCell {
         
         // カウントした数字
         countLabel.textAlignment = .center
+        countLabel.accessibilityIdentifier = "CounterOfThisCell"
         labelStackView.addArrangedSubview(countLabel)
         
         // stack viewの設定
