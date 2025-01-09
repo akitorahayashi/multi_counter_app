@@ -9,7 +9,7 @@ import Foundation
 import Verge
 
 struct CounterState: Equatable {
-    var counters: [Counter] = []
+    var counters: [Counter] = [Counter(id: UUID(), name: nil, countNum: 0)]
 }
 
 final class CounterStore {
