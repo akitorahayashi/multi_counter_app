@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class multi_counter_appUITestsLaunchTests: XCTestCase {
+final class AppLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
