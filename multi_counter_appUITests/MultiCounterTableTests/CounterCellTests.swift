@@ -21,6 +21,7 @@ class CounterCellTests: XCTestCase {
         app = nil
     }
     
+    // 名前を追加したり更新したりをアラートを通じてできるかテストする関数
     func testCounterNameChangeReflectsInView() {
         let tableView = app.tables["CounterTableView"]
         let defaultCell = tableView.cells.element(boundBy: 0)
@@ -48,7 +49,7 @@ class CounterCellTests: XCTestCase {
         // Assert
         XCTAssertEqual(nameLabel.label, secondName)
     }
-    
+    // + ボタンの機能をテストする関数
     func testIncrementButtonWorks() throws {
         let tableView = app.tables["CounterTableView"]
         // セルの中のボタンを取得
@@ -72,6 +73,7 @@ class CounterCellTests: XCTestCase {
         XCTAssertEqual(furtherIncrementedValue, currentValue! + 6, "複数回タップしたときにcountが正しく増加できていない")
     }
     
+    // - ボタンの機能をテストする関数
     func testDecrementButtonWorks() throws {
         let tableView = app.tables["CounterTableView"]
         // セルの中のボタンを取得
@@ -93,5 +95,21 @@ class CounterCellTests: XCTestCase {
         }
         let furtherDecrementedValue = Int(countLabel.label)
         XCTAssertEqual(furtherDecrementedValue, currentValue! - 6, "複数回タップしたときにcountが正しく減少できていない")
+    }
+    
+    // Counterを削除できるかテストする関数
+    func testCounterCellDeletion() {
+        let tableView = app.tables["CounterTableView"]
+        let initialCellCount = tableView.cells.count
+        let defaultCell = tableView.cells.element(boundBy: 0)
+        // セルを左にスワイプして削除ボタンを表示
+        defaultCell.swipeLeft()
+        // 削除ボタンが存在するか確認
+        let deleteButton = defaultCell.buttons["Delete"]
+        XCTAssertTrue(deleteButton.exists, "左にスワイプしてもDeleteボタンが出現しなかった")
+        deleteButton.tap()
+        // セルが削除されたことを確認
+        let finalCellCount = tableView.cells.count
+        XCTAssertEqual(finalCellCount, initialCellCount - 1, "セルは正しく削除されていない")
     }
 }
