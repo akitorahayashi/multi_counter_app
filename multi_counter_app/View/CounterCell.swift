@@ -26,6 +26,7 @@ class CounterCell: UITableViewCell {
         selectionStyle = .none
         
         // Counterの名前
+        nameLabel.accessibilityIdentifier = "CounterCellName"
         nameLabel.font = UIFont.systemFont(ofSize: 14)
         nameLabel.textAlignment = .center
         nameLabel.isHidden = true

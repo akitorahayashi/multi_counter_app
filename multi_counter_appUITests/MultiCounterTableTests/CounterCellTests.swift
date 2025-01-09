@@ -21,6 +21,34 @@ class CounterCellTests: XCTestCase {
         app = nil
     }
     
+    func testCounterNameChangeReflectsInView() {
+        let tableView = app.tables["CounterTableView"]
+        let defaultCell = tableView.cells.element(boundBy: 0)
+        defaultCell.tap()
+        // alertとtextfieldとsaveButtonを取得
+        let nameChangeAlert = app.alerts.matching(identifier: "NameChangeAlert").element
+        let nameChangeTextfield = nameChangeAlert.textFields.matching(identifier: "NameChangeTextField").element
+        let saveButton = nameChangeAlert.buttons.matching(identifier: "SaveButton").element
+        
+        // Act: counterに名前を追加する
+        let newName = "New Counter Name"
+        nameChangeTextfield.tap()
+        nameChangeTextfield.typeText(newName)
+        saveButton.tap()
+        // Assert
+        let nameLabel = defaultCell.staticTexts.matching(identifier: "CounterCellName").element
+        XCTAssertEqual(nameLabel.label, newName)
+        
+        // Act: counterの名前を更新する
+        defaultCell.tap()
+        let secondName = "New Counter Name2"
+        nameChangeTextfield.tap()
+        nameChangeTextfield.typeText("2")
+        saveButton.tap()
+        // Assert
+        XCTAssertEqual(nameLabel.label, secondName)
+    }
+    
     func testIncrementButtonWorks() throws {
         let tableView = app.tables["CounterTableView"]
         // セルの中のボタンを取得
@@ -28,7 +56,7 @@ class CounterCellTests: XCTestCase {
         let incrementButton = defaultCell.buttons["+"]
         // セルに紐づいている現在値を取得
         let countLabel = defaultCell.staticTexts.matching(identifier: "CounterOfThisCell").element
-        var currentValue = Int(countLabel.label)
+        let currentValue = Int(countLabel.label)
         
         // +ボタンをタップして値が増えることを確認
         incrementButton.tap()
