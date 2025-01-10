@@ -104,6 +104,7 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         let saveAction = UIAlertAction(title: "保存", style: .default) { [weak self] _ in
             if let text = alert.textFields?.first?.text?.trimmingCharacters(in: .whitespaces), !text.isEmpty {
                 self?.counterViewModel.updateName(at: indexPath.row, with: text)
+                self?.counterViewModel.saveState()
             }
         }
         saveAction.accessibilityIdentifier = "SaveButton"
