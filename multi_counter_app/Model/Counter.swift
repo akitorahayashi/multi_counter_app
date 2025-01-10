@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Counter: Equatable {
+struct Counter: Equatable, Codable {
     let id: UUID
     var name: String?
     var countNum: Int
