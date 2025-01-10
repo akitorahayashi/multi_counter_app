@@ -105,7 +105,7 @@ class CounterCellTests: XCTestCase {
         // セルを左にスワイプして削除ボタンを表示
         defaultCell.swipeLeft()
         // 削除ボタンが存在するか確認
-        let deleteButton = defaultCell.buttons["Delete"]
+                let deleteButton = defaultCell.buttons["Delete"]
         XCTAssertTrue(deleteButton.exists, "左にスワイプしてもDeleteボタンが出現しなかった")
         deleteButton.tap()
         // セルが削除されたことを確認

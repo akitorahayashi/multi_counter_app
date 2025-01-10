@@ -35,7 +35,7 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         view.addSubview(tableView)
         
         addCounterButton.setTitle(" Add Counter", for: .normal)
-        addCounterButton.addTarget(self, action: #selector(addCounter), for: .touchUpInside)
+        addCounterButton.addTarget(self, action: #selector(addCounterButtonTapped), for: .touchUpInside)
         addCounterButton.accessibilityIdentifier = "Add Counter"
         addCounterButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(addCounterButton)
@@ -61,7 +61,8 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-    @objc private func addCounter() {
+    @objc private func addCounterButtonTapped() {
+        MCVibrator.vibrate()
         counterViewModel.addCounter()
     }
     

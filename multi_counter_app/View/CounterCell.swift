@@ -89,8 +89,10 @@ class CounterCell: UITableViewCell {
     
     @objc private func incrementTapped() {
         incrementAction?()
+        MCVibrator.vibrate()
     }
     @objc private func decrementTapped() {
         decrementAction?()
+        MCVibrator.vibrate()
     }
 }
