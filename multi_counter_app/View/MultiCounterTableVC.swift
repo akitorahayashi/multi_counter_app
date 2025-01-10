@@ -25,6 +25,7 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 80
+        tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
         
         bindViewModel()
     }
@@ -82,6 +83,10 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
             self?.counterViewModel.decrementCounter(at: indexPath.row)
         }
         
+        cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        
+        // Divider用のViewを追加
+        
         return cell
     }
     
@@ -113,5 +118,10 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         if editingStyle == .delete {
             counterViewModel.removeCounter(at: indexPath.row)
         }
+    }
+    
+    // Deleteボタンの文字を変更
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "×"
     }
 }

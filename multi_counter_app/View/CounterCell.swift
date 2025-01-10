@@ -46,11 +46,13 @@ class CounterCell: UITableViewCell {
         
         // +ボタン
         incrementButton.setTitle("+", for: .normal)
+        incrementButton.titleLabel?.font = UIFont.systemFont(ofSize: 24)
         incrementButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(incrementButton)
         
         // -ボタン
         decrementButton.setTitle("-", for: .normal)
+        decrementButton.titleLabel?.font = UIFont.systemFont(ofSize: 24)
         decrementButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(decrementButton)
         
