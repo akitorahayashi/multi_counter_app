@@ -8,42 +8,36 @@
 import Verge
 
 final class CounterViewModel {
-    private let store: CounterStore
-    
-    init(store: CounterStore = CounterStore()) {
-        self.store = store
-    }
-    
     var counters: [Counter] {
-        store.state.counters
+        CounterStore.shared.state.counters
     }
     
     func addCounter() {
-        store.addCounter()
+        CounterStore.shared.addCounter()
     }
     
     func removeCounter(at index: Int) {
-        store.removeCounter(at: index)
+        CounterStore.shared.removeCounter(at: index)
     }
     
     func updateName(at index: Int, with name: String) {
-        store.updateName(at: index, name: name)
+        CounterStore.shared.updateName(at: index, name: name)
     }
     
     func incrementCounter(at index: Int) {
-        store.incrementCounter(at: index)
+        CounterStore.shared.incrementCounter(at: index)
     }
     
     func decrementCounter(at index: Int) {
-        store.decrementCounter(at: index)
+        CounterStore.shared.decrementCounter(at: index)
     }
     
     func saveState() {
-        store.saveStateToUserDefaults()
+        CounterStore.shared.saveStateToUserDefaults()
     }
     
     func observeCounters(_ observer: @escaping ([Counter]) -> Void) -> VergeAnyCancellable {
-        return store.observeState { state in
+        return CounterStore.shared.observeState { state in
             observer(state.counters)
         }
     }

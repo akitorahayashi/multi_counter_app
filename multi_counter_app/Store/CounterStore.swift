@@ -12,11 +12,13 @@ struct CounterState: Equatable {
     var counters: [Counter] = [Counter(id: UUID(), name: nil, countNum: 0)]
 }
 
-final class CounterStore {
-    private let store: Store<CounterState, Never>
-    private let userDefaultsKey = "CounterStateKey"
+private let userDefaultsKey = "CounterStateKey"
 
-    init(initialState: CounterState = CounterState()) {
+final class CounterStore {
+    static let shared = CounterStore()
+    private let store: Store<CounterState, Never>
+
+    private init(initialState: CounterState = CounterState()) {
         // 初期化時にUserDefaultsからデータをロード
         let savedState = CounterStore.loadStateFromUserDefaults() ?? initialState
         self.store = Store<CounterState, Never>(initialState: savedState, logger: nil)
@@ -91,7 +93,7 @@ final class CounterStore {
 
     // UserDefaultsから状態をロード
     private static func loadStateFromUserDefaults() -> CounterState? {
-        guard let data = UserDefaults.standard.data(forKey: "CounterStateKey") else { return nil }
+        guard let data = UserDefaults.standard.data(forKey: userDefaultsKey) else { return nil }
         do {
             let counters = try JSONDecoder().decode([Counter].self, from: data)
             return CounterState(counters: counters)
