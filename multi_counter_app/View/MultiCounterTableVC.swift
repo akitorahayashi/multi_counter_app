@@ -11,10 +11,6 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
     private let addCounterButton = UIButton(type: .contactAdd)
     private let counterViewModel = CounterViewModel()
     
-    private var cancellable: VergeAnyCancellable?
-    
-    deinit { cancellable = nil }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,7 +51,7 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     private func bindViewModel() {
-        cancellable = counterViewModel.observeCounters { [weak self] counters in
+        counterViewModel.observeCounters { [weak self] state in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
@@ -104,7 +100,6 @@ class MultiCounterTableVC: UIViewController, UITableViewDataSource, UITableViewD
         let saveAction = UIAlertAction(title: "保存", style: .default) { [weak self] _ in
             if let text = alert.textFields?.first?.text?.trimmingCharacters(in: .whitespaces), !text.isEmpty {
                 self?.counterViewModel.updateName(at: indexPath.row, with: text)
-                self?.counterViewModel.saveState()
             }
         }
         saveAction.accessibilityIdentifier = "SaveButton"

@@ -13,32 +13,28 @@ final class CounterViewModel {
     }
     
     func addCounter() {
-        CounterStore.shared.addCounter()
+        CounterStore.shared.handleAction(action: .addCounter)
     }
     
     func removeCounter(at index: Int) {
-        CounterStore.shared.removeCounter(at: index)
+        CounterStore.shared.handleAction(action: .removeCounter(index: index))
     }
     
     func updateName(at index: Int, with name: String) {
-        CounterStore.shared.updateName(at: index, name: name)
+        CounterStore.shared.handleAction(action: .updateName(index: index, name: name))
     }
     
     func incrementCounter(at index: Int) {
-        CounterStore.shared.incrementCounter(at: index)
+        CounterStore.shared.handleAction(action: .incrementCounter(index: index))
     }
     
     func decrementCounter(at index: Int) {
-        CounterStore.shared.decrementCounter(at: index)
+        CounterStore.shared.handleAction(action: .decrementCounter(index: index))
     }
     
-    func saveState() {
-        CounterStore.shared.saveStateToUserDefaults()
-    }
-    
-    func observeCounters(_ observer: @escaping ([Counter]) -> Void) -> VergeAnyCancellable {
+    func observeCounters(_ observer: @escaping (CounterState) -> Void) {
         return CounterStore.shared.observeState { state in
-            observer(state.counters)
+            observer(state)
         }
     }
 }
